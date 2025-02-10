@@ -399,7 +399,7 @@ function initializeSampleProfiles() {
         {
             name: "Piotr Wiśniewski",
             age: 42,
-            photo: "https://via.placeholder.com/150",
+            photo: "images/rudzki.jpg",
             points: 50,
             history: []
         }
