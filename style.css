@@ -1,0 +1,486 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #004080;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+main {
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #004080;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #002040;
+}
+
+#profiles-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#profiles-list li {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    background-color: #004080;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p {
+    font-size: 12px;  /* Zmniejszenie rozmiaru tekstu w stopce */
+}
+
+/* Nowy tryb ciemny */
+body.dark-mode {
+    background-color: #333;
+    color: #f0f0f0;
+}
+
+header.dark-mode {
+    background-color: #002040;
+}
+
+footer.dark-mode {
+    background-color: #002040;
+}
+
+/* Animacja fade-in */
+.hidden {
+    display: none;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Przycisk z ikoną */
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button i {
+    margin-right: 8px;
+}
+/* Styl dla listy profili w formie kart */
+#profiles-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    list-style-type: none;
+    padding: 0;
+}
+
+#profiles-list li {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#profiles-list li:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Styl zdjęcia w kształcie koła */
+#profiles-list li img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+/* Styl tekstów */
+#profiles-list li strong {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+/* Dostosowanie przycisków */
+#profiles-list li button {
+    background-color: #004080;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 8px 12px;
+    font-size: 0.9em;
+    margin: 5px 0;
+    transition: background-color 0.3s;
+}
+
+#profiles-list li button:hover {
+    background-color: #002040;
+}
+
+/* Opcjonalnie: zmniejszenie rozmiaru tekstu w przyciskach */
+#profiles-list li button {
+    font-size: 0.8em;
+}
+/* Domyślny styl (jasny) */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #004080;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+footer {
+    background-color: #004080;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Styl przycisku zmiany trybu */
+#toggle-theme {
+    background-color: #004080;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+/* Tryb ciemny */
+body.dark-mode {
+    background-color: #121212;
+    color: #f0f0f0;
+}
+
+header.dark-mode {
+    background-color: #333;
+}
+
+footer.dark-mode {
+    background-color: #333;
+}
+
+#profiles-list li.dark-mode {
+    background-color: #333;
+    color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+button.dark-mode {
+    background-color: #333;
+    color: #f0f0f0;
+}
+
+button.dark-mode:hover {
+    background-color: #555;
+}
+
+/* Styl zdjęć w trybie ciemnym */
+#profiles-list li img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+/* Strona powitalna */
+#welcome-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #004080;
+    color: white;
+    text-align: center;
+}
+
+#welcome-screen .welcome-container {
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+#welcome-screen h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+#welcome-screen p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+#welcome-screen button {
+    background-color: #ff9900;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#welcome-screen button:hover {
+    background-color: #e68a00;
+}
+
+/* Ukrywanie głównej zawartości na początku */
+#main-content {
+    display: none;
+}
+
+/* Przycisk zmiany trybu */
+#toggle-theme {
+    background-color: #004080;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+/* Donosy */
+#donosy {
+    margin-top: 30px;
+}
+
+#donosy textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#reports-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#reports-list li {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#reports-list li strong {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#reports-list li p {
+    margin: 0;
+}
+
+button {
+    background-color: #004080;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Płynna animacja przejścia */
+}
+
+button:hover {
+    background-color: #002040; /* Zmiana koloru tła */
+    transform: scale(1.1); /* Powiększenie przycisku */
+}
+
+button:active {
+    transform: scale(1); /* Powrót do normalnego rozmiaru po kliknięciu */
+}
+
+/* Strona powitalna */
+#welcome-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #004080;
+    color: white;
+    text-align: center;
+}
+
+#welcome-screen .welcome-container {
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+#welcome-screen h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+#welcome-screen p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+#welcome-screen button {
+    background-color: #ff9900;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#welcome-screen button:hover {
+    background-color: #e68a00;
+}
+
+/* Główna zawartość */
+#main-content.hidden {
+    display: none;
+}
+
+#main-content.show {
+    display: block;
+}
+
+#main-content {
+    opacity: 0;
+    transition: opacity 1s ease-in; /* Animacja pojawiania się */
+}
+
+/* Po kliknięciu w przycisk na stronie powitalnej */
+#main-content.show {
+    opacity: 1;
+}
+
+/* Strona powitalna znika */
+#welcome-screen.hidden {
+    opacity: 0;
+    pointer-events: none; /* Zablokowanie interakcji z tą sekcją */
+}
+
+/* Animacja dla profili */
+#profiles-list li {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0; /* Ukrywamy elementy na początku */
+    transform: translateY(20px); /* Ustalamy, że elementy będą zaczynały z dołu */
+    animation: slideIn 0.5s ease-out forwards; /* Używamy animacji */
+}
+
+/* Definicja animacji */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

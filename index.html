@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Konfident</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Strona powitalna -->
+    <section id="welcome-screen">
+        <div class="welcome-container">
+            <h1>Witaj w systemie E-Konfident!</h1>
+            <p>System zarządzania konfidentami. Kliknij, aby rozpocząć.</p>
+            <button id="start-button">Zaczynamy</button>
+        </div>
+    </section>
+
+    <!-- Główna zawartość strony (ukryta na początku) -->
+    <main id="main-content" class="hidden">
+        <header>
+            <h1>E-Konfident</h1>
+            <p>System zarządzania konfidentami</p>
+            <button id="toggle-theme">🌙</button> <!-- Przycisk do zmiany trybu -->
+        </header>
+
+        <section id="options">
+            <button onclick="showAddPoints()">Dodaj punkty</button>
+            <button onclick="showCreateProfile()">Utwórz nowy profil</button>
+            <button onclick="showAddReport()">Dodaj donos</button> <!-- Przycisk do donosów -->
+            <button onclick="sortProfilesByPoints()">Sortuj według punktów</button> <!-- Przycisk do sortowania -->
+        </section>
+
+        <section id="add-points" class="hidden">
+            <h2>Dodaj punkty</h2>
+            <form id="add-points-form">
+                <label for="profile-select">Wybierz profil:</label>
+                <select id="profile-select" required>
+                    <!-- Opcje będą dodawane dynamicznie -->
+                </select>
+                <label for="points">Liczba punktów:</label>
+                <input type="number" id="points" required>
+                <button type="submit">Dodaj punkty</button>
+            </form>
+            <button onclick="hideAddPoints()">Anuluj</button>
+        </section>
+
+        <section id="create-profile" class="hidden">
+            <h2>Utwórz nowy profil</h2>
+            <form id="create-profile-form">
+                <label for="name">Imię i nazwisko:</label>
+                <input type="text" id="name" required>
+                <label for="age">Wiek:</label>
+                <input type="number" id="age" required>
+                <label for="photo">Zdjęcie (URL):</label>
+                <input type="url" id="photo">
+                <button type="submit">Utwórz profil</button>
+            </form>
+            <button onclick="hideCreateProfile()">Anuluj</button>
+        </section>
+
+        <section id="donosy" class="hidden">
+            <h2>Dodaj donos</h2>
+            <form id="add-report-form">
+                <label for="report-profile-select">Wybierz profil:</label>
+                <select id="report-profile-select" required>
+                    <!-- Opcje będą dodawane dynamicznie -->
+                </select>
+                <label for="report-text">Treść donosu:</label>
+                <textarea id="report-text" required></textarea>
+                <button type="submit">Dodaj donos</button>
+            </form>
+            <button onclick="hideAddReport()">Anuluj</button>
+        </section>
+
+        <section id="profiles">
+            <h2>Lista konfidentów</h2>
+            <ul id="profiles-list">
+                <!-- Profile będą dodawane dynamicznie -->
+            </ul>
+        </section>
+
+        <section id="reports">
+            <h2>Donosy</h2>
+            <ul id="reports-list">
+                <!-- Donosy będą dodawane dynamicznie -->
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 E-Konfident</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
