@@ -60,7 +60,7 @@ document.getElementById('create-profile-form').addEventListener('submit', functi
         age: age,
         photo: photo,
         points: 0,
-        history: []  // Historia zmian punktów
+        history: []
     };
 
     profiles.push(newProfile);
@@ -70,6 +70,16 @@ document.getElementById('create-profile-form').addEventListener('submit', functi
     hideCreateProfile();
     alert('Profil dodany!');
 });
+
+    // Dodaj profil do Firestore
+    db.collection('profiles').add(newProfile)
+        .then(() => {
+            alert('Profil dodany!');
+            renderProfiles(); // Odśwież listę profili
+        })
+        .catch((error) => {
+            console.error("Błąd podczas dodawania profilu: ", error);
+        });
 
 // Dodawanie punktów
 document.getElementById('add-points-form').addEventListener('submit', function (e) {
@@ -105,26 +115,36 @@ document.getElementById('add-points-form').addEventListener('submit', function (
 
 
 // Edycja profilu
-function editProfile(index) {
-    const newName = prompt("Nowe imię i nazwisko:", profiles[index].name);
-    const newAge = prompt("Nowy wiek:", profiles[index].age);
-    const newPhoto = prompt("Nowy URL zdjęcia:", profiles[index].photo);
+function editProfile(id) {
+    const newName = prompt("Nowe imię i nazwisko:");
+    const newAge = prompt("Nowy wiek:");
+    const newPhoto = prompt("Nowy URL zdjęcia:");
+
     if (newName && newAge) {
-        profiles[index].name = newName;
-        profiles[index].age = newAge;
-        profiles[index].photo = newPhoto;
-        saveProfiles();
-        renderProfiles();
+        db.collection('profiles').doc(id).update({
+            name: newName,
+            age: newAge,
+            photo: newPhoto
+        })
+        .then(() => {
+            renderProfiles(); // Odśwież listę profili
+        })
+        .catch((error) => {
+            console.error("Błąd podczas edycji profilu: ", error);
+        });
     }
 }
 
 // Usuwanie profilu
-function deleteProfile(index) {
+function deleteProfile(id) {
     if (confirm("Czy na pewno chcesz usunąć ten profil?")) {
-        profiles.splice(index, 1);
-        saveProfiles();
-        renderProfiles();
-        updateProfileSelect();
+        db.collection('profiles').doc(id).delete()
+            .then(() => {
+                renderProfiles(); // Odśwież listę profili
+            })
+            .catch((error) => {
+                console.error("Błąd podczas usuwania profilu: ", error);
+            });
     }
 }
 
@@ -198,19 +218,27 @@ document.addEventListener('DOMContentLoaded', function () {
 // Renderowanie listy profili
 function renderProfiles() {
     const profilesList = document.getElementById('profiles-list');
-    profilesList.innerHTML = '';  // Wyczyść poprzednią listę profili
+    profilesList.innerHTML = ''; // Wyczyść listę profili
 
-    profiles.forEach((profile, index) => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-            <strong>${profile.name}</strong> (${profile.age} lat)<br>
-            Punkty: ${profile.points}<br>
-            ${profile.photo ? `<img src="${profile.photo}" alt="Zdjęcie" width="50" height="50">` : ''}<br>
-            <button onclick="editProfile(${index})">✏️ Edytuj</button>
-            <button onclick="deleteProfile(${index})">🗑️ Usuń</button>
-        `;
-        profilesList.appendChild(li);
-    });
+    // Pobierz profile z Firestore
+    db.collection('profiles').get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                const profile = doc.data();
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <strong>${profile.name}</strong> (${profile.age} lat)<br>
+                    Punkty: ${profile.points}<br>
+                    ${profile.photo ? `<img src="${profile.photo}" alt="Zdjęcie" width="50" height="50">` : ''}<br>
+                    <button onclick="editProfile('${doc.id}')">✏️ Edytuj</button>
+                    <button onclick="deleteProfile('${doc.id}')">🗑️ Usuń</button>
+                `;
+                profilesList.appendChild(li);
+            });
+        })
+        .catch((error) => {
+            console.error("Błąd podczas pobierania profili: ", error);
+        });
 }
 
 // Wyświetlanie historii punktów
@@ -220,12 +248,9 @@ function viewHistory(index) {
 }
 
 // Inicjalizacja strony
-document.addEventListener('DOMContentLoaded', function () {
-    initializeSampleProfiles(); // Dodaj przykładowe profile, jeśli nie ma żadnych
-    renderProfiles(); // Renderuj profile
-    updateProfileSelect(); // Zaktualizuj listę profili w formularzach
-    renderReports(); // Renderuj donosy
-    updateReportProfileSelect(); // Zaktualizuj listę profili w formularzu donosów
+document.addEventListener('DOMContentLoaded', function() {
+    renderProfiles();
+    updateProfileSelect();  // Zaktualizowanie select z profilami
 });
 // Renderowanie listy profili z nowym stylem kart
 function renderProfiles() {
@@ -379,34 +404,15 @@ function deleteReport(index) {
     }
 }
 
-// Funkcja do inicjalizacji przykładowych profili
-function initializeSampleProfiles() {
-    const sampleProfiles = [
-        {
-            name: "Jan Kowalski",
-            age: 35,
-            photo: "https://via.placeholder.com/150",
-            points: 100,
-            history: []
-        },
-        {
-            name: "Anna Nowak",
-            age: 28,
-            photo: "https://via.placeholder.com/150",
-            points: 75,
-            history: []
-        },
-        {
-            name: "Maksymilian Rudzki",
-            age: 42,
-            photo: "https://scontent.flcj1-1.fna.fbcdn.net/v/t39.30808-6/451435152_1966386057126243_5338964379078831436_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=vtjMI0m61XIQ7kNvgHbt4cJ&_nc_oc=Adh32BjVJzGW67FaSt-WeuvgynrV7uoaU1guDEjvPRCfpO76-fak8Ey5_qZZrkhJpjM&_nc_zt=23&_nc_ht=scontent.flcj1-1.fna&_nc_gid=AjOUSRFyvGvlzEExQGjl04v&oh=00_AYDdPSFdEA81mxEvUnkHMWd78RSqemdZVvN2-W7XGbn0_Q&oe=67B03A49",
-            points: 50,
-            history: []
-        }
-    ];
-
-    // Sprawdź, czy w localStorage są już profile
-    if (!localStorage.getItem('profiles')) {
-        localStorage.setItem('profiles', JSON.stringify(sampleProfiles)); // Zapisz przykładowe profile
-    }
-}
+const firebaseConfig = {
+    apiKey: "AIzaSyBf--PRQnsUE1TpvTw1rL4rTy9wB4r_S4s",
+    authDomain: "ekonfident-b0bea.firebaseapp.com",
+    projectId: "ekonfident-b0bea",
+    storageBucket: "ekonfident-b0bea.firebasestorage.app",
+    messagingSenderId: "380286573305",
+    appId: "1:380286573305:web:39b68e7f3f043622902028"
+  };
+  
+  // Inicjalizacja Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
