@@ -397,9 +397,9 @@ function initializeSampleProfiles() {
             history: []
         },
         {
-            name: "Piotr Wiśniewski",
+            name: "Maksymilian Rudzki",
             age: 42,
-            photo: "images/rudzki.jpg",
+            photo: "https://scontent.flcj1-1.fna.fbcdn.net/v/t39.30808-6/451435152_1966386057126243_5338964379078831436_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=vtjMI0m61XIQ7kNvgHbt4cJ&_nc_oc=Adh32BjVJzGW67FaSt-WeuvgynrV7uoaU1guDEjvPRCfpO76-fak8Ey5_qZZrkhJpjM&_nc_zt=23&_nc_ht=scontent.flcj1-1.fna&_nc_gid=AjOUSRFyvGvlzEExQGjl04v&oh=00_AYDdPSFdEA81mxEvUnkHMWd78RSqemdZVvN2-W7XGbn0_Q&oe=67B03A49",
             points: 50,
             history: []
         }
