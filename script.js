@@ -220,9 +220,12 @@ function viewHistory(index) {
 }
 
 // Inicjalizacja strony
-document.addEventListener('DOMContentLoaded', function() {
-    renderProfiles();
-    updateProfileSelect();  // Zaktualizowanie select z profilami
+document.addEventListener('DOMContentLoaded', function () {
+    initializeSampleProfiles(); // Dodaj przykładowe profile, jeśli nie ma żadnych
+    renderProfiles(); // Renderuj profile
+    updateProfileSelect(); // Zaktualizuj listę profili w formularzach
+    renderReports(); // Renderuj donosy
+    updateReportProfileSelect(); // Zaktualizuj listę profili w formularzu donosów
 });
 // Renderowanie listy profili z nowym stylem kart
 function renderProfiles() {
@@ -373,5 +376,37 @@ function deleteReport(index) {
         reports.splice(index, 1); // Usuń donos z listy
         localStorage.setItem('reports', JSON.stringify(reports)); // Zaktualizuj localStorage
         renderReports(); // Ponownie wyrenderuj listę donosów
+    }
+}
+
+// Funkcja do inicjalizacji przykładowych profili
+function initializeSampleProfiles() {
+    const sampleProfiles = [
+        {
+            name: "Jan Kowalski",
+            age: 35,
+            photo: "https://via.placeholder.com/150",
+            points: 100,
+            history: []
+        },
+        {
+            name: "Anna Nowak",
+            age: 28,
+            photo: "https://via.placeholder.com/150",
+            points: 75,
+            history: []
+        },
+        {
+            name: "Piotr Wiśniewski",
+            age: 42,
+            photo: "https://via.placeholder.com/150",
+            points: 50,
+            history: []
+        }
+    ];
+
+    // Sprawdź, czy w localStorage są już profile
+    if (!localStorage.getItem('profiles')) {
+        localStorage.setItem('profiles', JSON.stringify(sampleProfiles)); // Zapisz przykładowe profile
     }
 }
