@@ -37,7 +37,9 @@ label {
     margin-bottom: 5px;
 }
 
-input, select, button {
+input,
+select,
+button {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -80,7 +82,8 @@ footer {
 }
 
 footer p {
-    font-size: 12px;  /* Zmniejszenie rozmiaru tekstu w stopce */
+    font-size: 12px;
+    /* Zmniejszenie rozmiaru tekstu w stopce */
 }
 
 /* Nowy tryb ciemny */
@@ -110,6 +113,7 @@ footer.dark-mode {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -125,6 +129,7 @@ button {
 button i {
     margin-right: 8px;
 }
+
 /* Styl dla listy profili w formie kart */
 #profiles-list {
     display: grid;
@@ -184,6 +189,7 @@ button i {
 #profiles-list li button {
     font-size: 0.8em;
 }
+
 /* Domyślny styl (jasny) */
 body {
     font-family: Arial, sans-serif;
@@ -259,6 +265,7 @@ button.dark-mode:hover {
     object-fit: cover;
     margin-bottom: 10px;
 }
+
 /* Strona powitalna */
 #welcome-screen {
     display: flex;
@@ -361,16 +368,20 @@ button {
     color: white;
     border: none;
     cursor: pointer;
-    transition: all 0.3s ease; /* Płynna animacja przejścia */
+    transition: all 0.3s ease;
+    /* Płynna animacja przejścia */
 }
 
 button:hover {
-    background-color: #002040; /* Zmiana koloru tła */
-    transform: scale(1.1); /* Powiększenie przycisku */
+    background-color: #002040;
+    /* Zmiana koloru tła */
+    transform: scale(1.1);
+    /* Powiększenie przycisku */
 }
 
 button:active {
-    transform: scale(1); /* Powrót do normalnego rozmiaru po kliknięciu */
+    transform: scale(1);
+    /* Powrót do normalnego rozmiaru po kliknięciu */
 }
 
 /* Strona powitalna */
@@ -379,55 +390,15 @@ button:active {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #004080;
-    color: white;
-    text-align: center;
-}
-
-#welcome-screen .welcome-container {
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-}
-
-#welcome-screen h1 {
-    font-size: 2em;
-    margin-bottom: 20px;
-}
-
-#welcome-screen p {
-    font-size: 1.2em;
-    margin-bottom: 20px;
-}
-
-#welcome-screen button {
-    background-color: #ff9900;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.2em;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#welcome-screen button:hover {
-    background-color: #e68a00;
-}
-
-/* Główna zawartość */
-#main-content.hidden {
-    display: none;
-}
-
-#main-content.show {
-    display: block;
+    opacity: 1;
+    transition: opacity 1s ease-out;
+    /* Animacja zanikania */
 }
 
 #main-content {
     opacity: 0;
-    transition: opacity 1s ease-in; /* Animacja pojawiania się */
+    transition: opacity 1s ease-in;
+    /* Animacja pojawiania się */
 }
 
 /* Po kliknięciu w przycisk na stronie powitalnej */
@@ -438,7 +409,8 @@ button:active {
 /* Strona powitalna znika */
 #welcome-screen.hidden {
     opacity: 0;
-    pointer-events: none; /* Zablokowanie interakcji z tą sekcją */
+    pointer-events: none;
+    /* Zablokowanie interakcji z tą sekcją */
 }
 
 /* Animacja dla profili */
@@ -448,9 +420,12 @@ button:active {
     margin-bottom: 10px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    opacity: 0; /* Ukrywamy elementy na początku */
-    transform: translateY(20px); /* Ustalamy, że elementy będą zaczynały z dołu */
-    animation: slideIn 0.5s ease-out forwards; /* Używamy animacji */
+    opacity: 0;
+    /* Ukrywamy elementy na początku */
+    transform: translateY(20px);
+    /* Ustalamy, że elementy będą zaczynały z dołu */
+    animation: slideIn 0.5s ease-out forwards;
+    /* Używamy animacji */
 }
 
 /* Definicja animacji */
@@ -459,11 +434,13 @@ button:active {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
+
 form {
     background-color: white;
     padding: 20px;
@@ -479,6 +456,7 @@ form {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);

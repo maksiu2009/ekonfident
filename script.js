@@ -60,7 +60,7 @@ document.getElementById('create-profile-form').addEventListener('submit', functi
         age: age,
         photo: photo,
         points: 0,
-        history: []
+        history: []  // Historia zmian punktów
     };
 
     profiles.push(newProfile);
@@ -70,16 +70,6 @@ document.getElementById('create-profile-form').addEventListener('submit', functi
     hideCreateProfile();
     alert('Profil dodany!');
 });
-
-    // Dodaj profil do Firestore
-    db.collection('profiles').add(newProfile)
-        .then(() => {
-            alert('Profil dodany!');
-            renderProfiles(); // Odśwież listę profili
-        })
-        .catch((error) => {
-            console.error("Błąd podczas dodawania profilu: ", error);
-        });
 
 // Dodawanie punktów
 document.getElementById('add-points-form').addEventListener('submit', function (e) {
@@ -115,36 +105,26 @@ document.getElementById('add-points-form').addEventListener('submit', function (
 
 
 // Edycja profilu
-function editProfile(id) {
-    const newName = prompt("Nowe imię i nazwisko:");
-    const newAge = prompt("Nowy wiek:");
-    const newPhoto = prompt("Nowy URL zdjęcia:");
-
+function editProfile(index) {
+    const newName = prompt("Nowe imię i nazwisko:", profiles[index].name);
+    const newAge = prompt("Nowy wiek:", profiles[index].age);
+    const newPhoto = prompt("Nowy URL zdjęcia:", profiles[index].photo);
     if (newName && newAge) {
-        db.collection('profiles').doc(id).update({
-            name: newName,
-            age: newAge,
-            photo: newPhoto
-        })
-        .then(() => {
-            renderProfiles(); // Odśwież listę profili
-        })
-        .catch((error) => {
-            console.error("Błąd podczas edycji profilu: ", error);
-        });
+        profiles[index].name = newName;
+        profiles[index].age = newAge;
+        profiles[index].photo = newPhoto;
+        saveProfiles();
+        renderProfiles();
     }
 }
 
 // Usuwanie profilu
-function deleteProfile(id) {
+function deleteProfile(index) {
     if (confirm("Czy na pewno chcesz usunąć ten profil?")) {
-        db.collection('profiles').doc(id).delete()
-            .then(() => {
-                renderProfiles(); // Odśwież listę profili
-            })
-            .catch((error) => {
-                console.error("Błąd podczas usuwania profilu: ", error);
-            });
+        profiles.splice(index, 1);
+        saveProfiles();
+        renderProfiles();
+        updateProfileSelect();
     }
 }
 
@@ -172,7 +152,7 @@ function exportToCSV() {
     profiles.forEach(profile => {
         csv += `${profile.name},${profile.age},${profile.points}\n`;
     });
-    
+
     const hiddenElement = document.createElement('a');
     hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
     hiddenElement.target = '_blank';
@@ -187,7 +167,7 @@ function toggleDarkMode() {
     const footer = document.querySelector('footer');
     const profilesListItems = document.querySelectorAll('#profiles-list li');
     const buttons = document.querySelectorAll('button');
-    
+
     body.classList.toggle('dark-mode');
     header.classList.toggle('dark-mode');
     footer.classList.toggle('dark-mode');
@@ -218,27 +198,19 @@ document.addEventListener('DOMContentLoaded', function () {
 // Renderowanie listy profili
 function renderProfiles() {
     const profilesList = document.getElementById('profiles-list');
-    profilesList.innerHTML = ''; // Wyczyść listę profili
+    profilesList.innerHTML = '';  // Wyczyść poprzednią listę profili
 
-    // Pobierz profile z Firestore
-    db.collection('profiles').get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                const profile = doc.data();
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <strong>${profile.name}</strong> (${profile.age} lat)<br>
-                    Punkty: ${profile.points}<br>
-                    ${profile.photo ? `<img src="${profile.photo}" alt="Zdjęcie" width="50" height="50">` : ''}<br>
-                    <button onclick="editProfile('${doc.id}')">✏️ Edytuj</button>
-                    <button onclick="deleteProfile('${doc.id}')">🗑️ Usuń</button>
-                `;
-                profilesList.appendChild(li);
-            });
-        })
-        .catch((error) => {
-            console.error("Błąd podczas pobierania profili: ", error);
-        });
+    profiles.forEach((profile, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <strong>${profile.name}</strong> (${profile.age} lat)<br>
+            Punkty: ${profile.points}<br>
+            ${profile.photo ? `<img src="${profile.photo}" alt="Zdjęcie" width="50" height="50">` : ''}<br>
+            <button onclick="editProfile(${index})">✏️ Edytuj</button>
+            <button onclick="deleteProfile(${index})">🗑️ Usuń</button>
+        `;
+        profilesList.appendChild(li);
+    });
 }
 
 // Wyświetlanie historii punktów
@@ -248,7 +220,7 @@ function viewHistory(index) {
 }
 
 // Inicjalizacja strony
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     renderProfiles();
     updateProfileSelect();  // Zaktualizowanie select z profilami
 });
@@ -325,21 +297,21 @@ document.getElementById('add-report-form').addEventListener('submit', function (
     hideAddReport(); // Ukrywamy formularz donosów
 });
 
+// Renderowanie listy donosów
 function renderReports() {
     const reportsList = document.getElementById('reports-list');
     const reports = JSON.parse(localStorage.getItem('reports')) || [];
-    reportsList.innerHTML = ''; // Wyczyść listę donosów
-
-    reports.forEach((report, index) => {
+    reportsList.innerHTML = '';
+    reports.forEach((report) => {
         const li = document.createElement('li');
         li.innerHTML = `
             <strong>Donos na: ${report.profile.name}</strong>
             <p>${report.text}</p>
-            <button onclick="deleteReport(${index})">🗑️ Usuń donos</button>
         `;
         reportsList.appendChild(li);
     });
 }
+
 // Inicjalizacja strony (renderowanie donosów)
 renderReports();
 // Funkcja sortująca konfidentów według liczby punktów
@@ -370,49 +342,3 @@ document.getElementById('start-button').addEventListener('click', function () {
     document.getElementById('welcome-screen').classList.add('hidden'); // Ukrywanie strony powitalnej
     document.getElementById('main-content').classList.add('show'); // Pokazywanie głównej zawartości
 });
-
-// Inicjalizacja strony
-document.addEventListener('DOMContentLoaded', function () {
-    // Sprawdź, czy strona powitalna ma być wyświetlana
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        toggleDarkMode();
-    }
-
-    // Obsługa przycisku "Zaczynamy"
-    document.getElementById('start-button').addEventListener('click', function () {
-        document.getElementById('welcome-screen').classList.add('hidden'); // Ukryj stronę powitalną
-        document.getElementById('main-content').classList.remove('hidden'); // Pokaż główną zawartość
-        initializePage(); // Inicjalizacja strony (renderowanie profili, donosów itp.)
-    });
-});
-
-function initializePage() {
-    renderProfiles();
-    updateProfileSelect();
-    renderReports();
-    updateReportProfileSelect();
-}
-
-function deleteReport(index) {
-    const reports = JSON.parse(localStorage.getItem('reports')) || [];
-
-    if (confirm("Czy na pewno chcesz usunąć ten donos?")) {
-        reports.splice(index, 1); // Usuń donos z listy
-        localStorage.setItem('reports', JSON.stringify(reports)); // Zaktualizuj localStorage
-        renderReports(); // Ponownie wyrenderuj listę donosów
-    }
-}
-
-const firebaseConfig = {
-    apiKey: "AIzaSyBf--PRQnsUE1TpvTw1rL4rTy9wB4r_S4s",
-    authDomain: "ekonfident-b0bea.firebaseapp.com",
-    projectId: "ekonfident-b0bea",
-    storageBucket: "ekonfident-b0bea.firebasestorage.app",
-    messagingSenderId: "380286573305",
-    appId: "1:380286573305:web:39b68e7f3f043622902028"
-  };
-  
-  // Inicjalizacja Firebase
-  const app = firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
